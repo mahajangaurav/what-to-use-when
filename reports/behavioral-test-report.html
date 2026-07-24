@@ -1,0 +1,179 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Behavioral test results</title>
+<style>
+ *{margin:0;padding:0;box-sizing:border-box}
+ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f8fafc;color:#1f2937;line-height:1.6;padding:1.5rem;max-width:860px;margin:0 auto}
+ .hero{background:#dcfce7;border:1px solid #16a34a33;border-radius:20px;padding:1.5rem;margin-bottom:1.25rem}
+ .hero h1{font-size:1.3rem;color:#111827} .hero p{color:#374151}
+ .note{font-size:.78rem;color:#6b7280;margin-top:.5rem}
+ .kpis{display:flex;gap:1rem;margin-bottom:1.25rem;flex-wrap:wrap}
+ .kpi{flex:1;min-width:140px;background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:.9rem 1.1rem}
+ .kpi .v{font-size:1.6rem;font-weight:800} .kpi .l{font-size:.78rem;color:#6b7280}
+ .skill{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:1.3rem;margin-bottom:1.1rem}
+ .skill h2{font-size:1.05rem;margin-bottom:.2rem}
+ .case{border-top:1px solid #f1f5f9;padding:.9rem 0}
+ .prompt{font-weight:600;color:#111827}
+ .expect{font-size:.8rem;color:#6b7280;margin-bottom:.4rem}
+ .traj{background:#f8fafc;border:1px solid #eef2f7;border-radius:10px;padding:.6rem .8rem;font-size:.83rem;margin:.4rem 0}
+ .traj code{color:#1d4ed8}
+ .out{background:#fffdf7;border:1px solid #fde68a;border-radius:10px;padding:.6rem .8rem;font-size:.85rem;white-space:pre-wrap;margin:.4rem 0}
+ .judge{display:flex;gap:1rem;flex-wrap:wrap;font-size:.83rem;margin-top:.4rem}
+ .judge div b{color:#111827}
+ .pill{display:inline-block;padding:.12rem .55rem;border-radius:999px;font-size:.74rem;font-weight:700;color:#fff}
+ .stars{color:#f59e0b;letter-spacing:1px}
+ .notes{font-size:.83rem;color:#6b7280;margin-top:.3rem}
+ .footer{text-align:center;color:#9ca3af;font-size:.75rem;margin-top:1.5rem}
+</style></head><body>
+<div class="hero"><h1>🧪 Behavioral test results</h1>
+<p>Retest after broadening triggers (each condition enumerated separately) and switching to a crisp end-user message. Focus: the Teams &#x27;5 weeks&#x27; case and single how/why/when/what questions that previously failed. 7 should-fire (Teams, 4 single-question forms, email, research), 3 should-not-fire (direct action, multi-output, skill management).</p>
+<p class="note">Trajectories and outputs were produced model-in-the-loop (the assistant ran each skill on the test prompt). A production harness would generate these from automated rollouts + an LLM judge — the same live-model cost SkillOpt rollouts incur.</p></div>
+<div class="kpis">
+ <div class="kpi"><div class="v">10</div><div class="l">test cases run</div></div>
+ <div class="kpi"><div class="v" style="color:#16a34a">10</div><div class="l">passed</div></div>
+ <div class="kpi"><div class="v" style="color:#dc2626">0</div><div class="l">failed</div></div>
+ <div class="kpi"><div class="v">4.9/5</div><div class="l">avg output quality</div></div>
+</div>
+<div class="skill"><h2>what-to-use-when <span style="font-size:.8rem;color:#6b7280">(v3 — enumerated triggers, crisp dollars-only output, Opus 4.8)</span></h2><div class="case">
+ <div class="prompt">"Summarize my Teams messages from the last 5 weeks."  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>Classify: Teams catch-up over a 5-week window</code></div><div>2. <code>Recommend Copilot Chat — included</code></div><div>3. <code>Crisp cost: ~$1.25 (assumes Opus 4.8)</code></div><div>4. <code>AskUserQuestion gate</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Classification: This is a quick Teams catch-up — a single summary. | Recommendation: Microsoft 365 Copilot Chat can do this at no extra cost — it&#x27;s included in your Copilot license; just ask it in Copilot Chat. | If you&#x27;d rather I do it here in Cowork: this is a light task — roughly $1.25 (assumes Opus 4.8). | [Use Copilot Chat — included] / [Continue in Cowork — ~$1.25]</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: THE NEW FAILING CASE now fires: &#x27;summarize my Teams messages&#x27; + any-window phrasing is an explicit trigger (#3). Output is the crisp 3-part format, dollars only, no credits/PAYG.</div>
+</div><div class="case">
+ <div class="prompt">"How do I set up an out-of-office reply in Outlook?"  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>Classify: single how-to question</code></div><div>2. <code>Recommend Copilot Chat — included</code></div><div>3. <code>Crisp cost ~$1.25</code></div><div>4. <code>Gate</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Classification: This is a quick how-to question. | Recommendation: Copilot Chat answers this instantly at no extra cost — included in your Copilot license. | If you&#x27;d rather I do it here in Cowork: light task — roughly $1.25 (assumes Opus 4.8). | [Use Copilot Chat — included] / [Continue in Cowork — ~$1.25]</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: &#x27;How do I…?&#x27; single-question trigger (#5) now explicit — previously missed.</div>
+</div><div class="case">
+ <div class="prompt">"Why am I seeing this message in Copilot?"  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>Classify: single why question (product help)</code></div><div>2. <code>Recommend Copilot Chat — included</code></div><div>3. <code>Gate</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Classification: This is a quick product question. | Recommendation: Copilot Chat can explain this for free — it&#x27;s included in your license. | If you&#x27;d rather I do it here in Cowork: light task — roughly $1.25 (assumes Opus 4.8). | [Use Copilot Chat] / [Continue in Cowork — ~$1.25]</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: &#x27;Why…?&#x27; form fires correctly.</div>
+</div><div class="case">
+ <div class="prompt">"What is our travel reimbursement policy?"  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>Classify: single what/policy question</code></div><div>2. <code>Recommend Copilot Chat — included</code></div><div>3. <code>Gate</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Classification: This is a quick policy lookup. | Recommendation: Copilot Chat can find and answer this for free from your work content — included in your license. | If you&#x27;d rather I do it here in Cowork: light task — roughly $1.25 (assumes Opus 4.8). | [Use Copilot Chat] / [Continue in Cowork — ~$1.25]</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: &#x27;What is…?&#x27; form fires; routes policy lookups to Chat.</div>
+</div><div class="case">
+ <div class="prompt">"When is the next company all-hands?"  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>Classify: single when question</code></div><div>2. <code>Recommend Copilot Chat — included</code></div><div>3. <code>Gate</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Classification: This is a quick lookup question. | Recommendation: Copilot Chat can answer this for free from your calendar/work content. | If you&#x27;d rather I do it here in Cowork: light task — roughly $1.25 (assumes Opus 4.8). | [Use Copilot Chat] / [Continue in Cowork — ~$1.25]</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★☆</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: &#x27;When is…?&#x27; fires. Borderline vs a direct calendar lookup, but answering it in Chat is the free path — correct to route.</div>
+</div><div class="case">
+ <div class="prompt">"Summarise my emails."  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>Classify: email catch-up</code></div><div>2. <code>Recommend Copilot Chat — included</code></div><div>3. <code>Gate</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Classification: Email catch-up — a single summary. | Recommendation: Copilot Chat summarizes your inbox for free — included in your license. | If you&#x27;d rather I do it here in Cowork: light task — roughly $1.25 (assumes Opus 4.8). | [Use Copilot Chat] / [Continue in Cowork — ~$1.25]</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Email trigger still solid; crisp output.</div>
+</div><div class="case">
+ <div class="prompt">"Research our top 3 competitors and give me a cited report."  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>Classify: deep research</code></div><div>2. <code>Recommend Researcher — included, 25/mo</code></div><div>3. <code>Crisp cost ~$12</code></div><div>4. <code>Gate</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Classification: Deep, cited research. | Recommendation: Researcher (included, 25 combined/mo) does this with citations. | If you&#x27;d rather I do it here in Cowork: heavy task — roughly $12 (assumes Opus 4.8). | [Use Researcher — included] / [Continue in Cowork — ~$12]</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Research routes to Researcher; crisp heavy-tier dollar figure.</div>
+</div><div class="case">
+ <div class="prompt">"Send Sarah a note that I&#x27;ll have the numbers by Friday."  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should NOT trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>Recognize direct M365 action (send email)</code></div><div>2. <code>Do not route/gate</code></div><div>3. <code>Just send</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">(what-to-use-when stays silent — sending an email is a direct action, not a free-vs-paid routing decision.)</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Direct-action exclusion prevents a false fire on send.</div>
+</div><div class="case">
+ <div class="prompt">"From this report, make an Excel analysis, a written summary, and a slide deck."  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should NOT trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>Classify: one input -&gt; many outputs</code></div><div>2. <code>Recognize Cowork-legit</code></div><div>3. <code>Give crisp heavy estimate, proceed</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">This is a genuine Cowork job (one input -&gt; several finished pieces). Roughly $12 (assumes Opus 4.8). Proceeding in Cowork.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Does not over-block multi-output work.</div>
+</div><div class="case">
+ <div class="prompt">"Create a skill for my weekly status report."  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should NOT trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>Recognize skill-management intent</code></div><div>2. <code>Defer to skills skill</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">(what-to-use-when stays silent — skill management is handled by the skills skill.)</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Defers correctly via the exclusion.</div>
+</div></div>
+<div class="footer">Generated 2026-06-24 00:56 UTC · Cowork behavioral skill testing (model-in-the-loop)</div>
+</body></html>

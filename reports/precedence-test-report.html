@@ -1,0 +1,193 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Behavioral test results</title>
+<style>
+ *{margin:0;padding:0;box-sizing:border-box}
+ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f8fafc;color:#1f2937;line-height:1.6;padding:1.5rem;max-width:860px;margin:0 auto}
+ .hero{background:#dcfce7;border:1px solid #16a34a33;border-radius:20px;padding:1.5rem;margin-bottom:1.25rem}
+ .hero h1{font-size:1.3rem;color:#111827} .hero p{color:#374151}
+ .note{font-size:.78rem;color:#6b7280;margin-top:.5rem}
+ .kpis{display:flex;gap:1rem;margin-bottom:1.25rem;flex-wrap:wrap}
+ .kpi{flex:1;min-width:140px;background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:.9rem 1.1rem}
+ .kpi .v{font-size:1.6rem;font-weight:800} .kpi .l{font-size:.78rem;color:#6b7280}
+ .skill{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:1.3rem;margin-bottom:1.1rem}
+ .skill h2{font-size:1.05rem;margin-bottom:.2rem}
+ .case{border-top:1px solid #f1f5f9;padding:.9rem 0}
+ .prompt{font-weight:600;color:#111827}
+ .expect{font-size:.8rem;color:#6b7280;margin-bottom:.4rem}
+ .traj{background:#f8fafc;border:1px solid #eef2f7;border-radius:10px;padding:.6rem .8rem;font-size:.83rem;margin:.4rem 0}
+ .traj code{color:#1d4ed8}
+ .out{background:#fffdf7;border:1px solid #fde68a;border-radius:10px;padding:.6rem .8rem;font-size:.85rem;white-space:pre-wrap;margin:.4rem 0}
+ .judge{display:flex;gap:1rem;flex-wrap:wrap;font-size:.83rem;margin-top:.4rem}
+ .judge div b{color:#111827}
+ .pill{display:inline-block;padding:.12rem .55rem;border-radius:999px;font-size:.74rem;font-weight:700;color:#fff}
+ .stars{color:#f59e0b;letter-spacing:1px}
+ .notes{font-size:.83rem;color:#6b7280;margin-top:.3rem}
+ .footer{text-align:center;color:#9ca3af;font-size:.75rem;margin-top:1.5rem}
+</style></head><body>
+<div class="hero"><h1>🧪 Behavioral test results</h1>
+<p>11 prompts judged by 4 independent agents, each told it ALSO has strong built-in &#x27;create a presentation -&gt; build immediately&#x27; routing plus action-bias. For all 8 single-output prompts (incl. the exact failing &#x27;Create me an Agent 365 presentation&#x27;), every judge chose to run the cost-guard FIRST. For the 3 negatives (multi-output, direct send, skill mgmt) every judge correctly chose BUILD. 44/44 correct, unanimous.</p>
+<p class="note">Independent-judge simulation under competing-instruction framing, not the live production router. Strong positive signal (unanimous under adversarial action-bias framing), not a hard guarantee.</p></div>
+<div class="kpis">
+ <div class="kpi"><div class="v">11</div><div class="l">test cases run</div></div>
+ <div class="kpi"><div class="v" style="color:#16a34a">11</div><div class="l">passed</div></div>
+ <div class="kpi"><div class="v" style="color:#dc2626">0</div><div class="l">failed</div></div>
+ <div class="kpi"><div class="v">5.0/5</div><div class="l">avg output quality</div></div>
+</div>
+<div class="skill"><h2>what-to-use-when <span style="font-size:.8rem;color:#6b7280">(precedence v (944-char description, runs-first rule))</span></h2><div class="case">
+ <div class="prompt">"Create me an Agent 365 presentation."  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>4/4 judges: COST_GUARD first</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus: run cost-guard FIRST (4/4). the exact prompt that failed before.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct under action-bias competition</div>
+</div><div class="case">
+ <div class="prompt">"Make a deck about our Q3 results."  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>4/4 judges: COST_GUARD first</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus: run cost-guard FIRST (4/4). deck creation.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct under action-bias competition</div>
+</div><div class="case">
+ <div class="prompt">"Build me a PowerPoint on the new product launch."  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>4/4 judges: COST_GUARD first</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus: run cost-guard FIRST (4/4). PowerPoint creation.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct under action-bias competition</div>
+</div><div class="case">
+ <div class="prompt">"Draft a Word doc summarizing this proposal."  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>4/4 judges: COST_GUARD first</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus: run cost-guard FIRST (4/4). one document.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct under action-bias competition</div>
+</div><div class="case">
+ <div class="prompt">"Create a budget spreadsheet for the offsite."  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>4/4 judges: COST_GUARD first</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus: run cost-guard FIRST (4/4). one spreadsheet.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct under action-bias competition</div>
+</div><div class="case">
+ <div class="prompt">"Whip up a quick presentation for tomorrow&#x27;s standup."  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>4/4 judges: COST_GUARD first</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus: run cost-guard FIRST (4/4). presentation, casual phrasing.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct under action-bias competition</div>
+</div><div class="case">
+ <div class="prompt">"Summarize my Teams messages from the last 5 weeks."  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>4/4 judges: COST_GUARD first</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus: run cost-guard FIRST (4/4). Teams window control.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct under action-bias competition</div>
+</div><div class="case">
+ <div class="prompt">"Research our top 3 competitors with sources."  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>4/4 judges: COST_GUARD first</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus: run cost-guard FIRST (4/4). research control.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct under action-bias competition</div>
+</div><div class="case">
+ <div class="prompt">"From these notes, create a deck AND a one-page summary AND a tracker."  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should NOT trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>0/4 judges: BUILD (cost-guard stays out)</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus: do not intercept (0/4). multi-output Cowork-legit.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct under action-bias competition</div>
+</div><div class="case">
+ <div class="prompt">"Send the finished deck to Sarah."  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should NOT trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>0/4 judges: BUILD (cost-guard stays out)</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus: do not intercept (0/4). direct send action.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct under action-bias competition</div>
+</div><div class="case">
+ <div class="prompt">"Create a skill that builds my weekly deck."  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should NOT trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>0/4 judges: BUILD (cost-guard stays out)</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus: do not intercept (0/4). skill management.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct under action-bias competition</div>
+</div></div>
+<div class="footer">Generated 2026-06-24 04:15 UTC · Cowork behavioral skill testing (model-in-the-loop)</div>
+</body></html>

@@ -1,0 +1,389 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Behavioral test results</title>
+<style>
+ *{margin:0;padding:0;box-sizing:border-box}
+ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f8fafc;color:#1f2937;line-height:1.6;padding:1.5rem;max-width:860px;margin:0 auto}
+ .hero{background:#dcfce7;border:1px solid #16a34a33;border-radius:20px;padding:1.5rem;margin-bottom:1.25rem}
+ .hero h1{font-size:1.3rem;color:#111827} .hero p{color:#374151}
+ .note{font-size:.78rem;color:#6b7280;margin-top:.5rem}
+ .kpis{display:flex;gap:1rem;margin-bottom:1.25rem;flex-wrap:wrap}
+ .kpi{flex:1;min-width:140px;background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:.9rem 1.1rem}
+ .kpi .v{font-size:1.6rem;font-weight:800} .kpi .l{font-size:.78rem;color:#6b7280}
+ .skill{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:1.3rem;margin-bottom:1.1rem}
+ .skill h2{font-size:1.05rem;margin-bottom:.2rem}
+ .case{border-top:1px solid #f1f5f9;padding:.9rem 0}
+ .prompt{font-weight:600;color:#111827}
+ .expect{font-size:.8rem;color:#6b7280;margin-bottom:.4rem}
+ .traj{background:#f8fafc;border:1px solid #eef2f7;border-radius:10px;padding:.6rem .8rem;font-size:.83rem;margin:.4rem 0}
+ .traj code{color:#1d4ed8}
+ .out{background:#fffdf7;border:1px solid #fde68a;border-radius:10px;padding:.6rem .8rem;font-size:.85rem;white-space:pre-wrap;margin:.4rem 0}
+ .judge{display:flex;gap:1rem;flex-wrap:wrap;font-size:.83rem;margin-top:.4rem}
+ .judge div b{color:#111827}
+ .pill{display:inline-block;padding:.12rem .55rem;border-radius:999px;font-size:.74rem;font-weight:700;color:#fff}
+ .stars{color:#f59e0b;letter-spacing:1px}
+ .notes{font-size:.83rem;color:#6b7280;margin-top:.3rem}
+ .footer{text-align:center;color:#9ca3af;font-size:.75rem;margin-top:1.5rem}
+</style></head><body>
+<div class="hero"><h1>🧪 Behavioral test results</h1>
+<p>25 labeled prompts judged by 4 independent agents under realistic competition (built-in action-bias + pptx/docx/xlsx routing). Recall 100%, precision 100%, F1 1.00. All 17 should-fire prompts fired in all 4 runs (incl. the bare openers and the prior failing &#x27;create a presentation&#x27;); all 8 negatives stayed silent in all 4 runs — including &#x27;Are we good to ship this skill?&#x27;, proving the bare &#x27;are we&#x27; opener does NOT over-fire on ordinary conversation. Zero flaky triggers.</p>
+<p class="note">Independent-judge simulation under competing-instruction framing, not the live production router. Synthetic set. Unanimity + correct handling of the false-fire control are strong signals, not a hard guarantee.</p></div>
+<div class="kpis">
+ <div class="kpi"><div class="v">25</div><div class="l">test cases run</div></div>
+ <div class="kpi"><div class="v" style="color:#16a34a">25</div><div class="l">passed</div></div>
+ <div class="kpi"><div class="v" style="color:#dc2626">0</div><div class="l">failed</div></div>
+ <div class="kpi"><div class="v">5.0/5</div><div class="l">avg output quality</div></div>
+</div>
+<div class="skill"><h2>what-to-use-when <span style="font-size:.8rem;color:#6b7280">(customer-share v (no pricing, openers restored))</span></h2><div class="case">
+ <div class="prompt">"Summarize my emails."  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>4/4 judges: FIRE</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus FIRE (4/4). email.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct</div>
+</div><div class="case">
+ <div class="prompt">"Summarize my Teams messages from the last 5 weeks."  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>4/4 judges: FIRE</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus FIRE (4/4). Teams window.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct</div>
+</div><div class="case">
+ <div class="prompt">"Give me a rundown of this morning&#x27;s standup."  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>4/4 judges: FIRE</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus FIRE (4/4). meeting, paraphrase.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct</div>
+</div><div class="case">
+ <div class="prompt">"Catch me up on what I missed."  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>4/4 judges: FIRE</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus FIRE (4/4). catch-up.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct</div>
+</div><div class="case">
+ <div class="prompt">"How do I set up an out-of-office in Outlook?"  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>4/4 judges: FIRE</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus FIRE (4/4). how do I.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct</div>
+</div><div class="case">
+ <div class="prompt">"Why am I seeing this Copilot banner?"  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>4/4 judges: FIRE</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus FIRE (4/4). why.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct</div>
+</div><div class="case">
+ <div class="prompt">"When is the next all-hands?"  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>4/4 judges: FIRE</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus FIRE (4/4). when is / calendar.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct</div>
+</div><div class="case">
+ <div class="prompt">"Who&#x27;s the PM for Contoso?"  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>4/4 judges: FIRE</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus FIRE (4/4). who is / people.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct</div>
+</div><div class="case">
+ <div class="prompt">"Are we charging customers for Cowork?"  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>4/4 judges: FIRE</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus FIRE (4/4). bare opener &#x27;are we&#x27; / billing.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct</div>
+</div><div class="case">
+ <div class="prompt">"Do we pay extra for Researcher?"  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>4/4 judges: FIRE</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus FIRE (4/4). bare opener &#x27;do we&#x27; / billing.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct</div>
+</div><div class="case">
+ <div class="prompt">"Is it included in our license?"  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>4/4 judges: FIRE</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus FIRE (4/4). bare opener &#x27;is it&#x27; / billing.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct</div>
+</div><div class="case">
+ <div class="prompt">"What is our PTO carryover policy?"  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>4/4 judges: FIRE</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus FIRE (4/4). what is / policy.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct</div>
+</div><div class="case">
+ <div class="prompt">"Draft a one-pager from these notes."  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>4/4 judges: FIRE</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus FIRE (4/4). one doc.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct</div>
+</div><div class="case">
+ <div class="prompt">"Create me an Agent 365 presentation."  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>4/4 judges: FIRE</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus FIRE (4/4). the prior FAILING prompt.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct</div>
+</div><div class="case">
+ <div class="prompt">"Build a budget spreadsheet for the offsite."  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>4/4 judges: FIRE</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus FIRE (4/4). spreadsheet.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct</div>
+</div><div class="case">
+ <div class="prompt">"Research our top 3 competitors with sources."  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>4/4 judges: FIRE</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus FIRE (4/4). research.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct</div>
+</div><div class="case">
+ <div class="prompt">"Analyze this sales workbook for trends."  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>4/4 judges: FIRE</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus FIRE (4/4). analyze.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct</div>
+</div><div class="case">
+ <div class="prompt">"Send Sarah a note that I&#x27;ll have the numbers Friday."  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should NOT trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>0/4 judges: NO</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus NO (0/4). direct send.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct</div>
+</div><div class="case">
+ <div class="prompt">"Schedule a 30-min sync with Alex tomorrow."  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should NOT trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>0/4 judges: NO</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus NO (0/4). direct schedule.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct</div>
+</div><div class="case">
+ <div class="prompt">"From this report, build an Excel analysis, a summary, AND a deck."  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should NOT trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>0/4 judges: NO</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus NO (0/4). multi-output -&gt; Cowork.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct</div>
+</div><div class="case">
+ <div class="prompt">"Research 3 competitors, build a table, write a briefing, and make a deck."  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should NOT trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>0/4 judges: NO</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus NO (0/4). long-running multi-step -&gt; Cowork.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct</div>
+</div><div class="case">
+ <div class="prompt">"Create a skill that drafts my weekly status."  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should NOT trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>0/4 judges: NO</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus NO (0/4). skill mgmt.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct</div>
+</div><div class="case">
+ <div class="prompt">"Thanks, that&#x27;s perfect!"  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should NOT trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>0/4 judges: NO</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus NO (0/4). chit-chat control.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct</div>
+</div><div class="case">
+ <div class="prompt">"Let&#x27;s go with option B."  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should NOT trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>0/4 judges: NO</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus NO (0/4). conversation control.</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct</div>
+</div><div class="case">
+ <div class="prompt">"Are we good to ship this skill?"  <span class="pill" style="background:#16a34a">PASS</span></div>
+ <div class="expect">Expected: should NOT trigger · Triggering: ✅ correct</div>
+ <div class="expect">Actions the skill would take:</div>
+ <div class="traj"><div>1. <code>0/4 judges: NO</code></div></div>
+ <div class="expect">Representative output:</div>
+ <div class="out">Consensus NO (0/4). bare-opener FALSE-FIRE control (&#x27;are we&#x27;, conversational).</div>
+ <div class="judge">
+   <div><b>Workflow</b> <span class="stars">★★★★★</span></div>
+   <div><b>Output quality</b> <span class="stars">★★★★★</span></div>
+   <div><b>Actions sensible</b> ✅</div>
+   <div><b>Guardrails</b> ✅</div>
+ </div>
+ <div class="notes">Judge: Unanimous, correct</div>
+</div></div>
+<div class="footer">Generated 2026-06-24 21:36 UTC · Cowork behavioral skill testing (model-in-the-loop)</div>
+</body></html>
