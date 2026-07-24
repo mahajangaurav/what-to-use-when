@@ -39,28 +39,39 @@ Then it asks you to confirm — so you're always in control, and you learn which
 
 ---
 
-## See it in action
-
-**Summarizing email — pointed to Copilot Chat**
-
-![Summarizing email, pointed to Copilot Chat](docs/screenshots/1-email-summary.png)
-
-**Creating a deck — pointed to Copilot in PowerPoint**
-
-![Creating a deck, pointed to Copilot in PowerPoint](docs/screenshots/2-powerpoint.png)
-
-**Researching a topic — pointed to Researcher**
-
-![Researching a topic, pointed to Researcher](docs/screenshots/3-researcher.png)
-
----
-
 ## Deploy it across your organization
 
 Share it once and it installs for your users as a **plugin** — no manual setup on their end. Microsoft's guides walk through it:
 
 - **Use plugins with Copilot Cowork** — https://learn.microsoft.com/en-us/microsoft-365/copilot/cowork/cowork-plugins
 - **Manage agents in the Microsoft 365 admin center** — https://learn.microsoft.com/en-us/microsoft-365/admin/manage/manage-copilot-agents-integrated-apps
+
+
+---
+
+## See it in action
+
+<br/>
+
+### **Summarizing email - pointed to Copilot Chat**
+
+![Summarizing email, pointed to Copilot Chat](docs/screenshots/1-email-summary.png)
+
+---
+
+<br/>
+
+### **Creating a deck - pointed to Copilot in PowerPoint**
+
+![Creating a deck, pointed to Copilot in PowerPoint](docs/screenshots/2-powerpoint.png)
+
+---
+
+<br/>
+
+### **Researching a topic - pointed to Researcher**
+
+![Researching a topic, pointed to Researcher](docs/screenshots/3-researcher.png)
 
 ---
 
