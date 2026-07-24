@@ -74,4 +74,3 @@ The [`reports/`](reports/) folder holds the skill's validation and test results 
 
 This is a **community skill**, not an official Microsoft product, and it comes with no warranty. It's a guidance aid — not a billing or spending control. Microsoft product names, capabilities, license entitlements, and Cowork consumption are **subject to change**, so verify the current details for your tenant against official Microsoft documentation, and confirm your organization's licensing before relying on any routing recommendation.
 
-> 📌 *Swap in the exact disclaimer wording from your announcement post if you'd like them to match.*
